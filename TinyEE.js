@@ -7,6 +7,13 @@ class TinyEE {
   }
   emit(event, ...args) {
     const eventToCall = this.events.get(event);
-    eventToCall.apply(this, args);
+    if(typeof event === 'function') {
+      eventToCall.apply(this, args);
+    } else {
+      throw new Error(`Event ${event} doesn't exist`);
+    }
+  }
+  remove(event) {
+    this.events.delete(event);
   }
 }
